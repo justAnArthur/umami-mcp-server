@@ -1,6 +1,7 @@
 [
   {
     "name": "get_websites",
+    "annotations": { "readOnlyHint": true, "openWorldHint": true },
     "description": "Get list of all websites configured in Umami. Returns website ID, name, domain, and createdAt timestamp. CRITICAL: Always call this FIRST before any analytics queries to (1) verify the website exists, (2) check when it was created, and (3) ensure you don't request data from before the creation date. Analytics data only exists from createdAt onwards. If UMAMI_TEAM_ID is configured, websites are fetched from that team automatically.",
     "inputSchema": {
       "type": "object",
@@ -15,6 +16,7 @@
   },
   {
     "name": "get_stats",
+    "annotations": { "readOnlyHint": true, "openWorldHint": true },
     "description": "Get aggregated statistics for a website. Returns flat numeric fields: pageviews, visitors (unique sessions), visits, bounces, and totaltime. May include a 'comparison' object with the same fields representing the previous period of the same length. IMPORTANT: First check website createdAt date. If requesting 'last X days', verify that X days ago is after createdAt - if not, adjust start_date to createdAt. Note: 'visitors' = unique sessions, 'bounces' = single-pageview sessions, 'totaltime' = sum of time between pageviews (excludes bounces).",
     "inputSchema": {
       "type": "object",
@@ -37,6 +39,7 @@
   },
   {
     "name": "get_pageviews",
+    "annotations": { "readOnlyHint": true, "openWorldHint": true },
     "description": "Get pageview and session data grouped by time unit. Returns 'pageviews' array (total views) and 'sessions' array (unique visitors) per time period. Time labels in the 't' field correspond to the unit parameter. Always verify the website was created before your start_date, otherwise you'll get empty or misleading results.",
     "inputSchema": {
       "type": "object",
@@ -65,6 +68,7 @@
   },
   {
     "name": "get_metrics",
+    "annotations": { "readOnlyHint": true, "openWorldHint": true },
     "description": "Get metrics for a website. Returns array with 'x' (metric value) and 'y' (count). For 'url'/'path': page paths without query params. For 'referrer': traffic sources (empty string = direct). For 'browser/os/device': user agents. For 'country': 2-letter ISO codes. IMPORTANT: Check website createdAt first - requesting data before creation returns empty results.",
     "inputSchema": {
       "type": "object",
@@ -97,6 +101,7 @@
   },
   {
     "name": "get_active",
+    "annotations": { "readOnlyHint": true, "openWorldHint": true },
     "description": "Get count of current active visitors on the website in real-time. Returns array with 'x' field containing the visitor count as a string. No date parameters needed as this shows current state only.",
     "inputSchema": {
       "type": "object",
@@ -111,6 +116,7 @@
   },
   {
     "name": "get_sessions",
+    "annotations": { "readOnlyHint": true, "openWorldHint": true },
     "description": "List individual visitor sessions for a website over a date range, with pagination. Returns an object with 'data' (array of sessions, each with id, browser, os, device, country, region, city, language, screen, visits, views, firstAt, lastAt) plus 'count' (total sessions matching), 'page', and 'pageSize'. Each session id is what session replay (the recorder.js feature) records — use 'count' to see how many sessions/recordings exist, and pass a session 'id' to get_session_activity to inspect what happened in it. Check the website createdAt first; requesting before creation returns an empty list.",
     "inputSchema": {
       "type": "object",
@@ -147,6 +153,7 @@
   },
   {
     "name": "get_session_stats",
+    "annotations": { "readOnlyHint": true, "openWorldHint": true },
     "description": "Get aggregated session totals for a website over a date range. Returns flat numeric fields: pageviews, visitors, visits, countries, and events. Useful as a quick scope check before paging through get_sessions. Check the website createdAt first.",
     "inputSchema": {
       "type": "object",
@@ -169,6 +176,7 @@
   },
   {
     "name": "get_session_activity",
+    "annotations": { "readOnlyHint": true, "openWorldHint": true },
     "description": "Get the ordered activity timeline (pageviews + events) for a single session, identified by a session id from get_sessions. Returns an array of entries with createdAt, urlPath, urlQuery, referrerDomain, eventType (1 = pageview, 2 = custom event), eventName, and visitId. This is the closest data-level view of what a session replay shows — the sequence of pages and actions during the visit. Optionally bound it to a time window.",
     "inputSchema": {
       "type": "object",
